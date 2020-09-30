@@ -6,7 +6,7 @@
 
 
 
-###基本开发规范 
+### 基本开发规范 
 - 1.命名空间 开头必需大写  namespace  Weicot\Core\Controller
 - 2.类名开头大写 用驼峰法命名 class  BaseExample{}
 - 3.应用/模块开头必需大写 /Core
