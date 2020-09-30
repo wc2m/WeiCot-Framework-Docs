@@ -1,0 +1,508 @@
+<?php
+
+use Weicot\Customer\Model\Session;
+
+
+$block->usePackageJs("layui/common");
+?>
+    <style>
+        .layui-input-block.options-box-group-child {
+            margin: 0;
+        }
+    </style>
+    <script>
+        layui.use(['element', 'layer'], function () {
+            var element = layui.element;
+            var layer = layui.layer;
+            element.on('collapse(z_search)', function (data) {
+            });
+        });
+    </script>
+    <div class="x-body">
+        <!--搜索-->
+        <div class="layui-collapse" lay-filter="z_search">
+            <div class="layui-colla-item">
+                <h2 class="layui-colla-title">高级筛选</h2>
+                <div class="layui-colla-content layui-show">
+                    <div class="layui-row">
+                        <form class="layui-form layui-col-md12 x-so" id="zq_search">
+                            <div class="layui-form-item">
+
+
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">状态</label>
+                                    <div class="layui-input-inline">
+                                        <?php echo $block->eachSelect(\Weicot\Cms\Model\Content::$status, 'status', true, 1); ?>
+                                    </div>
+                                </div>
+
+
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">标题</label>
+                                    <div class="layui-input-inline">
+                                        <input type="text" name="title" id="title"
+                                               placeholder="标题"
+                                               autocomplete="off" class="layui-input">
+                                    </div>
+                                </div>
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">描述</label>
+                                    <div class="layui-input-inline">
+                                        <input type="text" name="description" id="description"
+                                               placeholder="描述"
+                                               autocomplete="off" class="layui-input">
+                                    </div>
+                                </div>
+
+
+                                <div class="layui-inline">
+                                    <label class="layui-form-label"></label>
+                                    <div class="layui-input-block">
+                                        <button id="search" class="layui-btn   layui-btn-sm layui-btn-normal "
+                                                lay-submit=""
+                                                lay-filter="search"><i
+                                                    class="layui-icon">&#xe615;</i></button>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <hr class="layui-bg-blue">
+            双击表格可查看具体信息
+        </div>
+        <table class="layui-hide" id="zq_table" lay-filter="zq_table"></table>
+
+
+        <!--添加-->
+        <div class="layui-row" id="zq_formpopbox"
+             style="display:none;position: absolute; top: 0; left: 0; bottom: 0; right: 0;">
+            <div class="layui-col-md11">
+                <form id="zq_form" class="layui-form" action="" style="margin-top: 20px;align:center;">
+
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">状态</label>
+                        <div class="layui-input-inline">
+                            <?php echo $block->eachSelect(\Weicot\Cms\Model\Content::$status, 'status', true, 1); ?>
+                        </div>
+                    </div>
+
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">标题</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="title" id="title"
+                                   placeholder="标题"
+                                   autocomplete="off"
+                                   lay-verify="required"
+                                   class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">描述</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="description" id="description"
+                                   placeholder="描述"
+                                   autocomplete="off"
+                                   lay-verify="required"
+                                   class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <div class="layui-input-block">
+                            <button class="layui-btn layui-btn-radius layui-btn-normal" lay-submit=""
+                                    lay-filter="zq_submit">
+                                确认
+                            </button>
+                            <button type="reset" class="layui-btn layui-btn-radius layui-btn-primary">重置</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!--编辑-->
+        <div class="layui-row" id="zq_edit_formpopbox"
+             style="display:none;position: absolute;  top: 0; left: 0; bottom: 0; right: 0;">
+            <div class="layui-col-md11">
+                <form id="zq_edit_form" class="layui-form" action="" style="margin-top: 20px;align:center;">
+                    <input type="hidden" name="id"/>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">状态</label>
+                        <div class="layui-input-inline">
+                            <?php echo $block->eachSelect(\Weicot\Cms\Model\Content::$status, 'status', true, 1); ?>
+                        </div>
+                    </div>
+
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">标题</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="title" id="title"
+                                   placeholder="标题"
+                                   autocomplete="off"
+                                   lay-verify="required"
+                                   class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">描述</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="description" id="description"
+                                   placeholder="描述"
+                                   autocomplete="off"
+                                   lay-verify="required"
+                                   class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <div class="layui-input-block">
+
+                            <button class="layui-btn layui-btn-radius layui-btn-normal" lay-submit=""
+                                    lay-filter="zq_edit_submit">
+                                确认
+                            </button>
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <table class="layui-hide" id="zq_table" lay-filter="zq_table"></table>
+        <script type="text/html" id="zq_toolbar">
+            <div class="layui-btn-container">
+                <button class="layui-btn layui-btn-sm" lay-event="add"><i class="layui-icon"></i>添加</button>
+            </div>
+
+            </div>
+        </script>
+        <script type="text/html" id="zq_bar">
+
+            <a class="layui-btn  layui-btn-normal layui-btn-xs" lay-event="edit">编辑</a>
+            <?php if (Session::isManage()) { ?>
+                <a class="layui-btn  layui-btn-normal layui-btn-xs" lay-event="del">删除</a>
+            <?php } ?>
+        </script>
+        <script>
+            var config = {
+                'version':<?php  echo __config('site', 'layui_version') ?> ,
+            };
+            $(function () {
+                layui.config({
+                    version: config.version
+                });
+                layui.use(['table', 'layer', 'form', 'laypage', 'upload', 'laydate'], function () {
+                    var table = layui.table
+                        , layer = layui.layer
+                        , form = layui.form
+                        , laypage = layui.laypage
+                        , upload = layui.upload
+                        , laydate = layui.laydate;
+
+
+                    table.render({
+                        elem: '#zq_table'
+                        , id: 'tableReload'
+                        , url: '/cms/content/page'
+                        , toolbar: '#zq_toolbar'
+                        , title: '模板'
+                        , page: true //开启分页
+                        , limit: 20
+                        // ,totalRow: true //开启合计行
+                        , cols: [[ //表头
+                            {type: 'checkbox', fixed: 'left'}
+                            , {field: 'id', title: 'ID', width: 80, sort: true, fixed: 'left', totalRowText: '合计：'}
+                            , {field: 'title', width: 100, title: '标题',}
+                            , {field: 'description', title: '描述', sort: true, totalRow: true,}
+                            , {field: 'status_name', title: '状态', sort: true, totalRow: true,}
+                            , {field: 'created', title: '创建时间', sort: true, totalRow: true,}
+                            , {field: 'updated', title: '更新时间', sort: true, totalRow: true,}
+                            , {fixed: 'right', width: 200, align: 'center', toolbar: '#zq_bar'}
+                        ]],
+                        parseData: function (res) {
+                            return {
+                                code: res.status == true ? 0 : 1,
+                                msg: res.mesg,
+                                count: res.data.count,
+                                data: res.data.list
+                            }
+                        },
+                    });
+
+
+                    table.on('toolbar(zq_table)', function (obj) {
+                        var checkStatus = table.checkStatus(obj.config.id)
+                            , data = checkStatus.data;
+                        data = eval("(" + JSON.stringify(data) + ")");
+                        switch (obj.event) {
+                            case 'add':
+                                zq_form('添加菜单', '', '700', '700');
+                                $("#zq_form").setForm({id: ''});
+                                form.render();
+
+                                break;
+                        }
+                    });
+
+
+                    table.on('tool(zq_table)', function (obj) {
+                        var data = obj.data
+                            , layEvent = obj.event;
+                        var tr = obj.tr;
+                        switch (layEvent) {
+                            case 'del':
+                                layer.confirm('您确定删除id：' + data.id + '的数据吗？', function (index) {
+
+                                    $.post("/cms/content/del", {id: data.id}, function (ret) {
+                                        if (ret.status) {
+                                            layer.msg(ret.msg, {icon: 1, time: 1500}, function () {
+                                                obj.del();
+                                                layer.close(index);
+
+                                            });
+                                        } else if (ret.status == false) {  //删除失败
+                                            layer.alert(ret.msg, {icon: 2}, function () {
+                                                layer.close(index);
+
+                                                window.location.reload();
+                                            });
+                                        }
+
+
+                                    });
+                                });
+                                break;
+                            case 'edit':
+                                zq_edit_form('编辑菜单', '', 600, 600);
+                                $("#zq_edit_form").setForm(data);
+                                form.render();
+                                break;
+                        }
+                    });
+
+
+                    table.on('edit(zq_table)', function (obj) {
+
+                        var value = obj.value
+                            , data = obj.data
+                            , did = obj.id
+                            , field = obj.field; //得到字段
+
+
+                        $.ajax({
+                            type: "post",
+                            url: "/cms/content/quickEdit",
+                            data: {
+                                'field': field,
+                                'value': value,
+                                'did': did,
+                                'row': data,
+
+                            },
+                            dataType: "json",
+                            success: function (msg) {
+                                if (msg.status) {
+                                    layer.msg(msg.msg, {icon: 1, time: 1500});
+                                    table.reload('tableReload');
+                                    layer.close(index);
+                                } else {
+                                    layer.alert(msg.msg, {icon: 2}, function () {
+
+                                        layer.close(index);
+
+                                    });
+                                }
+                            }
+                        });
+                        return false;
+
+                        layer.msg('[ID: ' + data.id + '] ' + field + ' 字段更改为：' + value);
+                    });
+
+                    form.on('submit(zq_submit)', function (data) {
+
+                        var formData = data.field;
+                        $.ajax({
+                            type: "post",
+                            url: "/cms/content/add",
+                            data: formData,
+                            dataType: "json",
+                            success: function (msg) {
+
+                                if (msg.status) {
+                                    layer.msg(msg.msg, {icon: 1, time: 1500});
+                                    table.reload('tableReload');
+                                    layer.close(index);
+                                } else {
+                                    layer.alert(msg.msg, {icon: 2}, function () {
+
+                                        layer.close(index);
+
+                                    });
+                                }
+                            }
+                        });
+                        return false;
+                    });
+
+                    table.on('rowDouble(zq_table)', function (obj) {
+                        var data = obj.data;
+                        layer.open({
+                            type: 2,
+                            title: '查看',
+                            maxmin: true,
+                            shadeClose: true,
+                            area: ['1200px', '900px'],
+                            content: '/cms/content/detail?id=' + data.id
+                        });
+                        obj.tr.addClass('layui-table-click').siblings().removeClass('layui-table-click');
+                    });
+
+
+                    form.on('submit(zq_edit_submit)', function (data) {
+                        var formData = data.field;
+                        $.ajax({
+                            type: "post",
+                            url: "/cms/content/edit",
+                            data: formData,
+                            dataType: "json",
+                            success: function (msg) {
+                                if (msg.status) {
+                                    layer.msg(msg.msg, {icon: 1, time: 1500});
+                                    table.reload('tableReload');
+                                    layer.close(index);
+                                } else {
+                                    layer.alert(msg.msg, {icon: 2}, function () {
+
+                                        layer.close(index);
+
+                                    });
+                                }
+                            }
+                        });
+                        return false;
+                    });
+
+
+                    form.on('submit(search)', function (data) {
+                        var formData = data.field;
+                        table.reload('tableReload', {
+                            page: {
+                                curr: 1
+                            }
+                            , where: formData
+                            , url: '/cms/content/page'
+                            , method: 'post'
+                        });
+                        return false;
+                    });
+
+
+                });
+
+
+            });
+
+
+            var index;
+
+            //表单弹出层
+            function zq_edit_form(title, url, w, h) {
+                if (title == null || title == '') {
+                    title = false;
+                }
+                ;
+                if (url == null || url == '') {
+                }
+                ;// url="404.html";
+                if (w == null || w == '') {
+                    w = ($(window).width() * 0.9);
+                }
+                ;
+                if (h == null || h == '') {
+                    h = ($(window).height() - 50);
+                }
+                ;
+                index = layer.open({
+                    type: 1,
+                    title: title,
+
+                    area: [w + 'px', h + 'px'],
+                    fix: false, //不固定
+                    maxmin: true,
+                    shadeClose: true,
+                    shade: 0.4,//背景灰度
+                    content: $("#zq_edit_formpopbox").html()
+                });
+            }
+
+
+            function zq_detail_form(title, url, w, h) {
+                if (title == null || title == '') {
+                    title = false;
+                }
+                ;
+                if (url == null || url == '') {
+                }
+                ;// url="404.html";
+                if (w == null || w == '') {
+                    w = ($(window).width() * 0.9);
+                }
+                ;
+                if (h == null || h == '') {
+                    h = ($(window).height() - 50);
+                }
+                ;
+                index = layer.open({
+                    type: 1,
+                    title: title,
+
+                    area: [w + 'px', h + 'px'],
+                    fix: false, //不固定
+                    maxmin: true,
+                    shadeClose: true,
+                    shade: 0.4,//背景灰度
+                    content: $("#zq_detail_formpopbox").html()
+                });
+            }
+
+            function zq_form(title, url, w, h) {
+                if (title == null || title == '') {
+                    title = false;
+                }
+                ;
+                if (url == null || url == '') {
+                }
+                ;// url="404.html";
+                if (w == null || w == '') {
+                    w = ($(window).width() * 0.9);
+                }
+                ;
+                if (h == null || h == '') {
+                    h = ($(window).height() - 50);
+                }
+                ;
+                index = layer.open({
+                    type: 1,
+                    title: title,
+
+                    area: [w + 'px', h + 'px'],
+                    fix: false, //不固定
+                    maxmin: true,
+                    shadeClose: true,
+                    shade: 0.4,//背景灰度
+                    content: $("#zq_formpopbox").html(),
+                    yes: function (index, layero) {
+
+                        // uploadInst.reload();
+                    }
+                });
+
+
+            }
+        </script>
