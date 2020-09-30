@@ -126,7 +126,7 @@ class Common extends Block
 
 ```
 添加完成后 我们可以看到  这个控制器下面的模板文件输出  
-![输出示例](doc/gimage/01.png "weicot")  
+![输出示例](gimage/01.png "weicot")  
 
 > 想要直接显示   block  与模板（template）的引用关系 可以直接 在配置文件( app\app\etc\Config.php)中开启 debug 下的  show_path即可
  ```php
@@ -138,7 +138,7 @@ class Common extends Block
  
  ```
  > 效果如下 
- ![输出示例](doc/gimage/02.png "weicot") 
+ ![输出示例](gimage/02.png "weicot") 
  
 
  
@@ -693,7 +693,7 @@ function zq_form(title, url, w, h) {
 
 ```
 做完以上两部后访问控制器你可以看到一个空白的页面
-![输出示例](doc/gimage/03.png "weicot") 
+![输出示例](gimage/03.png "weicot") 
  
 ### 9.现在我们来实现读写查询的 action  函数
  - 1.打开刚才创建的控制器类生成以下函数
@@ -808,7 +808,7 @@ function zq_form(title, url, w, h) {
 
 ```
  做完这一步之后你可以尝试添加一次数据  添加成功后刷新页面  就可以看到您刚才添加的数据啦
- ![输出示例](doc/gimage/04.png "weicot") 
+ ![输出示例](gimage/04.png "weicot") 
  
  现在我们写完了数据添加以及显示的 action 做编辑和删除的 action 啦
  继续在我们当前的控制器文件 写入以下代码
@@ -866,7 +866,7 @@ function zq_form(title, url, w, h) {
 ```     
 
 自此一个读写查询模块就完成啦
- ![输出示例](doc/gimage/05.png "weicot") 
+ ![输出示例](gimage/05.png "weicot") 
 
 
      
