@@ -1,5 +1,5 @@
 
-# WeiCot Framework  快速开发教程 -www.weicot.com 
+# WeiCot Framework 快速开发教程 -框架的目录结构说明
 
 ## 框架简介
 WeiCot Framework  是一个高度模块化低耦合可拆分的适用于快速开发的PHP框架
