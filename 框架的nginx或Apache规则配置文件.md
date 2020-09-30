@@ -1,23 +1,24 @@
 
-# WeiCot Framework 快速开发教程 -框架的nginx或Apache规则配置文件
+# WeiCot Framework 快速开发教程 -框架的nginx或Apache规则配置文件(推荐使用Nginx)
 ### WeiCot Framework  快速开发教程 -www.weicot.com 
 
-###  Nginx 环境配置文件  以lnmp 为例
+###  Nginx 环境配置文件 以lnmp 为例
 
 
 ### nginx 下 WeiCot Framework主配置文件  /etc/nginx/WeiCotFramework.conf
 
-```lua
+```
 location / {
         index index.html index.php; ## Allow a static html file to be shown first
-        try_files $uri $uri/ @handler; ## If missing pass the URI to Magento's front handler
+        try_files $uri $uri/ @handler; ## If missing pass the URI to WeiCot-Framework's front handler
         expires 30d; ## Assume all files are cachable
     }
  
     ## These locations would be hidden by .htaccess normally
     location /app/                { deny all; }
-    location /includes/           { deny all; }
+    location /vendor/             { deny all; }
     location /lib/                { deny all; }
+    location /bin/                { deny all; }
     location /media/downloadable/ { deny all; }
     location /pkginfo/            { deny all; }
     location /report/config.xml   { deny all; }
@@ -32,7 +33,7 @@ location / {
         return 404;
     }
  
-    location @handler { ## Magento uses a common front handler
+    location @handler { ## WeiCot Framework uses a common front handler
         rewrite / /index.php;
     }
  
@@ -44,16 +45,16 @@ location / {
 
 
 #### lnmp  下 WeiCot Framework 虚拟配置文件位置   /etc/nginx/vhost/wf.conf
-```lua
+```
 server
     {
         listen 80;
         #listen [::]:80;
-        server_name s1.weicot.com;
+        server_name wf.weicot.com;
         index index.html index.htm index.php default.html default.htm default.php;
         root  /home/wwwroot/wf;
  
-        include mage.conf;
+        include WeiCotFramework.conf;
         #error_page   404   /404.html;
         include enable-php.conf;
  
