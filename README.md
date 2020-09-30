@@ -13,7 +13,6 @@
 ### 当前框架版本
 **WeiCot Framework  Version （框架版本版本号） 2.57**
 
-
 ### 快速入门
 - [服务器环境搭建教程](http://www.weicot.com/centos7mysqlmariadbsendmailnginxphp-%e7%8e%af%e5%a2%83%e6%90%ad%e5%bb%ba%e4%b8%80%e6%9d%a1%e9%be%99/ "服务器环境搭建教程")
 - [框架的nginx或Apache规则配置文件](框架的nginx或Apache规则配置文件.md "框架的nginx或Apache规则配置文件")
@@ -22,3 +21,17 @@
 - [如何手动创建一个模块以Cms为例](如何手动创建一个模块以Cms为例.md "如何手动创建一个模块以Cms为例")
 - [一些Class和Function说明](一些Class和Function说明.md "一些Class和Function说明")
 
+ 
+### 涉及的开源项目
+**前端主要使用的开源项目 layui 用于CURD自动生成(非深度绑定 可用 VUE 、ElementUI、Mint UI 组件进行替换 )**
+- [layui](https://www.layui.com/ "layui")
+- [layui 文档](https://www.layui.com/doc/ "layui 文档")
+
+**后端经常使用的ORM  think-orm**
+- [think-orm](https://github.com/top-think/think-orm "think-orm")
+- [think-orm 文档](https://www.kancloud.cn/manual/think-orm/1257998 "think-orm 文档")
+
+
+### 联系我们
+- 邮箱 1050653098@qq.com
+- [博客 weicot.com](http://www.weicot.com/ "作者博客")
